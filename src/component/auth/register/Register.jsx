@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "../../form/Form";
 import { useDispatch } from "react-redux";
 import { addUserData } from "../../redux/thunk/registerThunk";
+import { imageData } from "../../imageFunction/imageConverting";
 
 const Register = () => {
   let [userDetails, setUserDetails] = useState({
@@ -12,6 +13,9 @@ const Register = () => {
     dob: "",
     contact: "",
     gender: "",
+    image: "",
+    followers: [],
+    following: [],
   });
 
   let { name, email, password, confirmPassword, dob, contact, gender } =
@@ -60,11 +64,17 @@ const Register = () => {
     console.log(userDetails);
     if (password === confirmPassword) {
       setUserDetails({ ...userDetails, password: password });
-      // console.log(userDetails);
+      console.log(userDetails);
       dispatch(addUserData(userDetails));
     } else {
       alert("Password Mismatch");
     }
+  };
+
+  let handleImage = async (e) => {
+    let image = e.target.files[0];
+    let convertedImage = await imageData(image);
+    setUserDetails({ ...userDetails, image: convertedImage });
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -81,6 +91,11 @@ const Register = () => {
         Female
         <input type="radio" value="others" name="gender" />
         Others
+      </article>
+
+      <article>
+        <label htmlFor="">Profile Pic</label>
+        <input type="file" onChange={handleImage} accept="image/*" />
       </article>
       <button>Submit</button>
     </form>
