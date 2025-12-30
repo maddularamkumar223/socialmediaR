@@ -7,7 +7,11 @@ let loginSlice = createSlice({
     userId: "",
     isLogin: false,
   },
-  reducer: {},
+  reducers: {
+    logOut: (state, action) => {
+      state.isLogin = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginValidation.fulfilled, (state, action) => {
       state.userId = action.payload;
@@ -17,5 +21,5 @@ let loginSlice = createSlice({
     });
   },
 });
-
+export let { logOut } = loginSlice.actions;
 export default loginSlice.reducer;
