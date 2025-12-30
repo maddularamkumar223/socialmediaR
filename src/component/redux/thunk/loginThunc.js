@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchUSers } from "./../apiCalls";
+import { fetchUSers } from "../apicalls";
 
 let loginValidation = createAsyncThunk("auth/login", async (data) => {
   let users = await fetchUSers();
@@ -10,7 +10,8 @@ let loginValidation = createAsyncThunk("auth/login", async (data) => {
   console.log(singleUser);
 
   if (singleUser) {
-    return singleUser.id;
+    sessionStorage.setItem("id", singleUser.id);
+    return singleUser;
   }
 });
 export default loginValidation;

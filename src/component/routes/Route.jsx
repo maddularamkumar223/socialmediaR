@@ -3,6 +3,8 @@ import App from "../../App";
 import Login from "../auth/login/Login";
 import Register from "../auth/register/Register";
 import Profile from "../profile/Profile";
+import Post from "./../post/Post";
+import Homepage from "./../home/Homepage";
 
 let route = createBrowserRouter([
   {
@@ -10,7 +12,7 @@ let route = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/login",
+        path: "/",
         element: <Login />,
       },
       {
@@ -20,6 +22,14 @@ let route = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/addPost",
+        element: <Post />,
+      },
+      {
+        path: "/home",
+        element: <Homepage />,
       },
     ],
   },
