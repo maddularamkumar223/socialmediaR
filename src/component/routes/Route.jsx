@@ -5,6 +5,9 @@ import Register from "../auth/register/Register";
 import Profile from "../profile/Profile";
 import Post from "./../post/Post";
 import Homepage from "./../home/Homepage";
+import Messages from "../messages/Messages";
+import DisplayMessages from "../messages/DisplayMessages";
+import Notification from "../notification/Notification";
 
 let route = createBrowserRouter([
   {
@@ -30,6 +33,18 @@ let route = createBrowserRouter([
       {
         path: "/home",
         element: <Homepage />,
+      },
+      {
+        path: "/messages",
+        element: <Messages />,
+      },
+      {
+        path: "/displayMessages",
+        element: <DisplayMessages />,
+      },
+      {
+        path: "/notification",
+        element: <Notification />,
       },
     ],
   },
