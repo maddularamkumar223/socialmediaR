@@ -6,14 +6,19 @@ import { FaComment } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";
 import Styles from "./home.module.css";
 import { FaHeart } from "react-icons/fa";
-import { follow_followers } from "../redux/thunk/userThunk";
+import { follow_followers, unFollow_followers } from "../redux/thunk/userThunk";
 
 const Homepage = () => {
-  let users = useSelector((state) => state.register.userData);
-  let post = useSelector((state) => state.post.posts);
-  let dispatch = useDispatch();
   let userId = sessionStorage.getItem("id");
-  let user = useSelector((state) => state.login.userId.following);
+  let users = useSelector((state) => state.register.userData);
+  let isFollowersUpdate = useSelector((state) => state.user.isFollowersUpdate);
+  
+  let post = useSelector((state) => state.post.posts);
+
+  let singleUserData = useSelector((state) =>
+    state.register.userData.find((value) => value.id === userId)
+  );
+  let dispatch = useDispatch();
   let [like, setLike] = useState(false);
 
   let handleLike = () => {
@@ -21,9 +26,12 @@ const Homepage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchUserData());
     dispatch(fetchPostData());
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [isFollowersUpdate]);
   return (
     <section id={Styles.home}>
       <section>
@@ -31,22 +39,31 @@ const Homepage = () => {
           .filter((value) => value.id !== userId)
           .map((value) => {
             return (
-              <article>
+              <article key={value.id}>
                 <figure>
                   <img src={value.image} alt="" />
                 </figure>
                 <p>{value.name}</p>
                 <button
                   onClick={() =>
-                    dispatch(
-                      follow_followers({
-                        senderId: userId,
-                        receiverId: value.id,
-                      })
-                    )
+                    singleUserData.following?.includes(value.id)
+                      ? dispatch(
+                          unFollow_followers({
+                            senderId: userId,
+                            receiverId: value.id,
+                          })
+                        )
+                      : dispatch(
+                          follow_followers({
+                            senderId: userId,
+                            receiverId: value.id,
+                          })
+                        )
                   }
                 >
-                  {user?.includes(value.id) ? "Following" : "Follow"}
+                  {singleUserData.following?.includes(value.id)
+                    ? "Following"
+                    : "Follow"}
                 </button>
               </article>
             );

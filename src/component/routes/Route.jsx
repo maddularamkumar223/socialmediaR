@@ -8,6 +8,7 @@ import Homepage from "./../home/Homepage";
 import Messages from "../messages/Messages";
 import DisplayMessages from "../messages/DisplayMessages";
 import Notification from "../notification/Notification";
+import Layout from "../layout/Layout";
 
 let route = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ let route = createBrowserRouter([
       {
         path: "/notification",
         element: <Notification />,
+      },
+      {
+        path: "/layout",
+        element: <Layout />,
       },
     ],
   },
